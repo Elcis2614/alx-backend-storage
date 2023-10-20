@@ -6,12 +6,13 @@
 import uuid
 import redis
 from typing import Union
+from typing import Any
 from typing import Callable
 from typing import Optional
 from functools import wraps
 
 
-def count_calls(method: Callable[[any], any]) -> Callable[[any], any]:
+def count_calls(method: Callable[[Any], Any]) -> Callable[[Any], Any]:
     """
         Decorator for store method
     """
