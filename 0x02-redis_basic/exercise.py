@@ -12,9 +12,24 @@ from typing import Optional
 from functools import wraps
 
 
+def call_history(method: Callable) -> Callable:
+    """
+        Decorator for stre method
+        store the history of inputs and outputs for method
+    """
+    @wraps(method)
+    def wrappeur(self, *args):
+        self._redis.rpush("{}:inputs".format(method.__qualname__), str(args))
+        output = method(self, *args)
+        self._redis.rpush("{}:outputs".format(method.__qualname__), output)
+        return output
+    return wrappeur
+
+
 def count_calls(method: Callable) -> Callable:
     """
         Decorator for store method
+        Counts the number of times store method is called
     """
     @wraps(method)
     def wrappeur(self, data):
@@ -32,6 +47,7 @@ class Cache():
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
             sets data to the redis instance
