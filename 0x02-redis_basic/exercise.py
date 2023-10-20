@@ -12,7 +12,7 @@ from typing import Optional
 from functools import wraps
 
 
-def count_calls(method: Callable[[Any], Any]) -> Callable[[Any], Any]:
+def count_calls(method: Callable[[Any, Union[str, bytes, int, float]], str]) -> Callable[[Any, Union[str, bytes, int, float]],str]:
     """
         Decorator for store method
     """
