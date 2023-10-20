@@ -16,7 +16,7 @@ def count_calls(method: Callable[[Union[str, bytes, int, float]], str]) -> Calla
         Decorator for store method
     """
     @wraps(method)
-    def wrappeur(self, data):
+    def wrappeur(self, data: Union[str, bytes, int, float]):
         """
            wrapper
         """
