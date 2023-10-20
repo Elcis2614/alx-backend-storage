@@ -18,7 +18,7 @@ def count_calls(method: Callable[[Union[str, bytes, int, float]], str]) -> Calla
     @wraps(method)
     def wrappeur(self, data: Union[str, bytes, int, float]) -> str:
         """
-           wrapper
+           wrapper function
         """
         self._redis.incr(method.__qualname__)
         return method(self, data)
