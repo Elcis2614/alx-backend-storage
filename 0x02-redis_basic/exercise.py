@@ -11,7 +11,7 @@ from typing import Optional
 from functools import wraps
 
 
-def count_calls(method: Callable[[any], any]) -> Callable[[any], any]:
+def count_calls(method: Callable[[any], str]) -> Callable[[any], str]:
     """
         Decorator for store method
     """
