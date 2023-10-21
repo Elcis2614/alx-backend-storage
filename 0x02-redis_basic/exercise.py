@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
     Simple class with redis data
+    And methods to manipulate the redis data/ instance
 """
 
 import uuid
@@ -59,6 +60,10 @@ def count_calls(method: Callable) -> Callable:
 
 
 class Cache():
+    """
+        Cache class implements a redis instance and other
+        methods to manage it
+    """
     def __init__(self) -> None:
         self._redis = redis.Redis()
         self._redis.flushdb()
