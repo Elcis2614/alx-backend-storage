@@ -22,9 +22,10 @@ def replay(method: Callable) -> type(None):
     print("{} was called {} times:".format(fn, calls))
     inputs = cache._redis.lrange("{}:inputs".format(fn), 0, -1)
     outputs = cache._redis.lrange("{}:outputs".format(fn), 0, -1)
-    for i in range(calls):
-        print("{}(*{}) -> {}".format(fn, inputs[i].decode('utf-8'),
-                                     outputs[i].decode('utf-8')))
+    data = tuple(zip(inputs, outputs))
+    for item in data:
+        print("{}(*{}) -> {}".format(fn, item[0].decode('utf-8'),
+                                     item[1].decode('utf-8')))
 
 
 def call_history(method: Callable) -> Callable:
