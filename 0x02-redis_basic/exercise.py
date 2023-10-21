@@ -15,6 +15,7 @@ from functools import wraps
 def replay(method: Callable) -> type(None):
     """
        display the history of calls of a particular function
+       Use method key to generate the output
     """
     cache = method.__self__
     calls = cache.get(method.__qualname__, int)
