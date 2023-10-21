@@ -12,6 +12,21 @@ from typing import Optional
 from functools import wraps
 
 
+def replay(method: Callable) -> type(None):
+    """
+       display the history of calls of a particular function
+    """
+    cache = method.__self__
+    calls = cache.get(method.__qualname__, int)
+    fn = method.__qualname__
+    print("{} was called {} times:".format(fn, calls))
+    inputs = cache._redis.lrange("{}:inputs".format(fn), 0, -1)
+    outputs = cache._redis.lrange("{}:outputs".format(fn), 0, -1)
+    for i in range(calls):
+        print("{}(*{}) -> {}".format(fn, inputs[i].decode('utf-8'),
+                                     outputs[i].decode('utf-8')))
+
+
 def call_history(method: Callable) -> Callable:
     """
         Decorator for stre method
@@ -83,4 +98,4 @@ class Cache():
         """
            converts binary to integer
         """
-        return int(data, 2)
+        return int(data, 10)
